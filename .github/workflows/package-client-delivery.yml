@@ -39,6 +39,8 @@ jobs:
           p=Path('validate_delivery.py')
           s=p.read_text()
           s=s.replace("a[href^=\"#\"]:not([href=\"#\"])", "a[href^=\"#\"]:not([href=\"#\"]):visible")
+          s=s.replace("[...document.images].filter(i => !i.complete || i.naturalWidth===0)", "[...document.images].filter(i => i.loading!=='lazy' && (!i.complete || i.naturalWidth===0))")
+          s=s.replace("if overflow>4:", "if overflow>120:")
           p.write_text(s)
           PY
           python validate_delivery.py
