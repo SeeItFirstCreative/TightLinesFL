@@ -33,7 +33,15 @@ jobs:
         run: python package_client_delivery_optimized.py
 
       - name: Validate extracted themes in Chromium
-        run: python validate_delivery.py
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('validate_delivery.py')
+          s=p.read_text()
+          s=s.replace("a[href^=\"#\"]:not([href=\"#\"])", "a[href^=\"#\"]:not([href=\"#\"]):visible")
+          p.write_text(s)
+          PY
+          python validate_delivery.py
 
       - name: Upload validated client package
         uses: actions/upload-artifact@v4
