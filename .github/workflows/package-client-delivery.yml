@@ -6,6 +6,9 @@ on:
       - client-delivery-package
     paths:
       - .github/workflows/package-client-delivery.yml
+      - package_client_delivery_optimized.py
+      - package_client_delivery.py
+      - validate_delivery.py
 
 jobs:
   package:
@@ -26,8 +29,8 @@ jobs:
           pip install requests beautifulsoup4 pillow playwright
           python -m playwright install --with-deps chromium
 
-      - name: Build delivery ZIP
-        run: python package_client_delivery.py
+      - name: Build optimized delivery ZIP
+        run: python package_client_delivery_optimized.py
 
       - name: Validate extracted themes in Chromium
         run: python validate_delivery.py
